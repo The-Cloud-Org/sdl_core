@@ -140,10 +140,8 @@ errors::eType CObjectSchemaItem::validate(
     }
     const SmartObject& field = object.getElement(key);
 
-    errors::eType result = errors::OK;
     // Check if MessageVersion matches schema version
-    // cppcheck-suppress redundantAssignment
-    result =
+    errors::eType result =
         correct_member.mSchemaItem->validate(field,
                                              &report__->ReportSubobject(key),
                                              MessageVersion,

@@ -397,9 +397,8 @@ void PerformInteractionRequest::ProcessUIResponse(
   HmiInterfaces::InterfaceState ui_interface_state =
       application_manager_.hmi_interfaces().GetInterfaceState(
           HmiInterfaces::HMI_INTERFACE_UI);
-  bool result = false;
-  // cppcheck-suppress redundantAssignment
-  result = Compare<hmi_apis::Common_Result::eType, EQ, ONE>(
+
+  bool result = Compare<hmi_apis::Common_Result::eType, EQ, ONE>(
       ui_result_code_,
       hmi_apis::Common_Result::SUCCESS,
       hmi_apis::Common_Result::WARNINGS);
@@ -846,10 +845,9 @@ void PerformInteractionRequest::DisablePerformInteraction() {
 
 bool PerformInteractionRequest::IsWhiteSpaceExist() {
   LOG4CXX_AUTO_TRACE(logger_);
-  const char* str = NULL;
 
-  // cppcheck-suppress redundantAssignment
-  str = (*message_)[strings::msg_params][strings::initial_text].asCharArray();
+  const char* str =
+      (*message_)[strings::msg_params][strings::initial_text].asCharArray();
   if (!CheckSyntax(str)) {
     LOG4CXX_ERROR(logger_, "Invalid initial_text syntax check failed");
     return true;
@@ -1049,17 +1047,13 @@ const bool PerformInteractionRequest::HasHMIResponsesToWait() const {
 
 void PerformInteractionRequest::SendBothModeResponse(
     const smart_objects::SmartObject& msg_param) {
-  LOG4CXX_AUTO_TRACE(logger_);
-  mobile_apis::Result::eType perform_interaction_result_code =
-      mobile_apis::Result::INVALID_ENUM;
   app_mngr::commands::ResponseInfo ui_perform_info(
       ui_result_code_, HmiInterfaces::HMI_INTERFACE_UI, application_manager_);
   app_mngr::commands::ResponseInfo vr_perform_info(
       vr_result_code_, HmiInterfaces::HMI_INTERFACE_VR, application_manager_);
   const bool result =
       PrepareResultForMobileResponse(ui_perform_info, vr_perform_info);
-  // cppcheck-suppress redundantAssignment
-  perform_interaction_result_code =
+  mobile_apis::Result::eType perform_interaction_result_code =
       PrepareResultCodeForResponse(ui_perform_info, vr_perform_info);
   const smart_objects::SmartObject* response_params =
       msg_param.empty() ? NULL : &msg_param;
