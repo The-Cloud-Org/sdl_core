@@ -131,6 +131,20 @@ TEST_F(GetSystemInfoResponseTest, GetSystemInfo_UNSUCCESS) {
   command->Run();
 }
 
+TEST_F(GetSystemInfoResponseTest, GetSystemInfo_Comparison_ccpuVersion) {
+  MessageSharedPtr command_msg = CreateCommandMsg();
+  (*command_msg)[strings::params][hmi_response::code] =
+      hmi_apis::Common_Result::SUCCESS;
+  (*command_msg)[strings::msg_params][hmi_response::capabilities] =
+      (capabilities_);
+
+  ResponseFromHMIPtr command(CreateCommand<GetSystemInfoResponse>(command_msg));
+
+  EXPECT_CALL(mock_hmi_capabilities_, matches_ccpu_version(ccpu_version));
+
+  command->Run();
+}
+
 }  // namespace get_system_info_response
 }  // namespace hmi_commands_test
 }  // namespace commands_test

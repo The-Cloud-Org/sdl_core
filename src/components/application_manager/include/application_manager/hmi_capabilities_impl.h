@@ -80,6 +80,8 @@ class HMICapabilitiesImpl : public HMICapabilities {
 
   void set_ccpu_version(const std::string& ccpu_version) OVERRIDE;
 
+  void matches_ccpu_version(const std::string& ccpu_version) OVERRIDE;
+
   const std::string& ccpu_version() const OVERRIDE;
 
   bool attenuated_supported() const OVERRIDE;

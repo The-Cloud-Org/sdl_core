@@ -96,6 +96,13 @@ class HMICapabilities {
   virtual void set_ccpu_version(const std::string& ccpu_version) = 0;
 
   /**
+   * @brief Interface that checks for compliance new software version of the
+   * target with last received
+   * @param ccpu_version Received system/hmi software version
+   */
+  virtual void matches_ccpu_version(const std::string& ccpu_version) = 0;
+
+  /**
    * @brief Returns software version of the target
    * @return TRUE if it supported, otherwise FALSE
    */

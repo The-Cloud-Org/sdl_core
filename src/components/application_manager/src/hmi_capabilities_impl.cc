@@ -1950,6 +1950,20 @@ void HMICapabilitiesImpl::set_ccpu_version(const std::string& ccpu_version) {
   ccpu_version_ = ccpu_version;
 }
 
+void HMICapabilitiesImpl::matches_ccpu_version(
+    const std::string& ccpu_version) {
+  LOG4CXX_AUTO_TRACE(logger_);
+
+  if (ccpu_version_ == ccpu_version) {
+    app_mngr_.set_hmi_cooperating(true);
+    return;
+  }
+
+  set_ccpu_version(ccpu_version);
+  DeleteCachedCapabilitiesFile();
+  app_mngr_.OnSendGetCapabilitiesForInterface();
+}
+
 const std::string& HMICapabilitiesImpl::ccpu_version() const {
   return ccpu_version_;
 }

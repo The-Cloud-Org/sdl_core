@@ -203,6 +203,7 @@ class MockHMICapabilities : public ::application_manager::HMICapabilities {
 
   MOCK_CONST_METHOD0(ccpu_version, const std::string&());
   MOCK_METHOD1(set_ccpu_version, void(const std::string& ccpu_version));
+  MOCK_METHOD1(matches_ccpu_version, void(const std::string& ccpu_version));
   MOCK_METHOD0(get_hmi_language_handler,
                application_manager::HMILanguageHandler&());
   MOCK_METHOD1(set_handle_response_for,
