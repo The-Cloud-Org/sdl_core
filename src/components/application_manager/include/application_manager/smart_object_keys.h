@@ -604,6 +604,7 @@ extern const char* capabilities;
 extern const char* speech_capabilities;
 extern const char* prerecorded_speech_capabilities;
 extern const char* preset_bank_capabilities;
+extern const char* on_screen_present_available;
 extern const char* allowed;
 extern const char* vehicle_type;
 extern const char* did_result;
