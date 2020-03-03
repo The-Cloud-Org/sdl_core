@@ -294,9 +294,9 @@ void InitCapabilities() {
       std::string("44KHZ"), hmi_apis::Common_SamplingRate::RATE_44KHZ));
 
   bit_per_sample_enum.insert(std::make_pair(
-      std::string("RATE_8_BIT"), hmi_apis::Common_BitsPerSample::RATE_8_BIT));
+      std::string("8_BIT"), hmi_apis::Common_BitsPerSample::RATE_8_BIT));
   bit_per_sample_enum.insert(std::make_pair(
-      std::string("RATE_16_BIT"), hmi_apis::Common_BitsPerSample::RATE_16_BIT));
+      std::string("16_BIT"), hmi_apis::Common_BitsPerSample::RATE_16_BIT));
 
   audio_type_enum.insert(
       std::make_pair(std::string("PCM"), hmi_apis::Common_AudioType::PCM));
