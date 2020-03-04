@@ -1603,6 +1603,27 @@ HMICapabilitiesImpl::GetInterfacesToUpdate() const {
   return interfaces_to_update_;
 }
 
+void HMICapabilitiesImpl::InterfaceResponseReceived(
+    hmi_apis::FunctionID::eType requested_interface) {
+  LOG4CXX_AUTO_TRACE(logger_);
+
+  if (app_mngr_.IsHMICooperating()) {
+    return;
+  }
+
+  auto it = find(interfaces_to_request_.begin(),
+                 interfaces_to_request_.end(),
+                 requested_interface);
+  if (it != interfaces_to_request_.end()) {
+    interfaces_to_request_.erase(it);
+    LOG4CXX_DEBUG(logger_,
+                  "Wait for " << interfaces_to_request_.size() << " responses");
+    if (interfaces_to_request_.empty()) {
+      app_mngr_.SetHMICooperating(true);
+    }
+  }
+}
+
 bool HMICapabilitiesImpl::AreAllFieldsSaved(
     const Json::Value& root_node,
     const char* interface_name,
@@ -1642,6 +1663,21 @@ bool HMICapabilitiesImpl::AreAllFieldsSaved(
   }
 
   return true;
+}
+
+void HMICapabilitiesImpl::InitInterfacesToBeRequested() {
+  interfaces_to_request_ = {hmi_apis::FunctionID::RC_GetCapabilities,
+                            hmi_apis::FunctionID::TTS_GetLanguage,
+                            hmi_apis::FunctionID::TTS_GetSupportedLanguages,
+                            hmi_apis::FunctionID::TTS_GetCapabilities,
+                            hmi_apis::FunctionID::UI_GetLanguage,
+                            hmi_apis::FunctionID::UI_GetSupportedLanguages,
+                            hmi_apis::FunctionID::UI_GetCapabilities,
+                            hmi_apis::FunctionID::VR_GetLanguage,
+                            hmi_apis::FunctionID::VR_GetSupportedLanguages,
+                            hmi_apis::FunctionID::VR_GetCapabilities,
+                            hmi_apis::FunctionID::VehicleInfo_GetVehicleType};
+  interfaces_to_update_ = interfaces_to_request_;
 }
 
 void HMICapabilitiesImpl::PrepareUiJsonValueForSaving(
@@ -1955,7 +1991,7 @@ void HMICapabilitiesImpl::matches_ccpu_version(
   LOG4CXX_AUTO_TRACE(logger_);
 
   if (ccpu_version_ == ccpu_version) {
-    app_mngr_.set_hmi_cooperating(true);
+    app_mngr_.SetHMICooperating(true);
     return;
   }
 

@@ -839,22 +839,8 @@ void ApplicationManagerImpl::ConnectToDevice(const std::string& device_mac) {
 
 void ApplicationManagerImpl::OnHMIStartedCooperation() {
   LOG4CXX_AUTO_TRACE(logger_);
+  hmi_capabilities_->InitInterfacesToBeRequested();
   MessageHelper::SendGetSystemInfoRequest(*this);
-
-  std::shared_ptr<smart_objects::SmartObject> is_vr_ready(
-      MessageHelper::CreateModuleInfoSO(hmi_apis::FunctionID::VR_IsReady,
-                                        *this));
-  rpc_service_->ManageHMICommand(is_vr_ready);
-
-  std::shared_ptr<smart_objects::SmartObject> is_tts_ready(
-      MessageHelper::CreateModuleInfoSO(hmi_apis::FunctionID::TTS_IsReady,
-                                        *this));
-  rpc_service_->ManageHMICommand(is_tts_ready);
-
-  std::shared_ptr<smart_objects::SmartObject> is_ui_ready(
-      MessageHelper::CreateModuleInfoSO(hmi_apis::FunctionID::UI_IsReady,
-                                        *this));
-  rpc_service_->ManageHMICommand(is_ui_ready);
 
   std::shared_ptr<smart_objects::SmartObject> is_navi_ready(
       MessageHelper::CreateModuleInfoSO(
@@ -865,11 +851,6 @@ void ApplicationManagerImpl::OnHMIStartedCooperation() {
       MessageHelper::CreateModuleInfoSO(
           hmi_apis::FunctionID::VehicleInfo_IsReady, *this));
   rpc_service_->ManageHMICommand(is_ivi_ready);
-
-  std::shared_ptr<smart_objects::SmartObject> is_rc_ready(
-      MessageHelper::CreateModuleInfoSO(hmi_apis::FunctionID::RC_IsReady,
-                                        *this));
-  rpc_service_->ManageHMICommand(is_rc_ready);
 
   const auto interfaces_to_update = hmi_capabilities_->GetInterfacesToUpdate();
 
@@ -3033,7 +3014,7 @@ void ApplicationManagerImpl::SendOnSDLClose() {
 void ApplicationManagerImpl::UnregisterAllApplications() {
   LOG4CXX_DEBUG(logger_, "Unregister reason  " << unregister_reason_);
 
-  set_hmi_cooperating(false);
+  SetHMICooperating(false);
   bool is_ignition_off = false;
   using namespace mobile_api::AppInterfaceUnregisteredReason;
   using namespace helpers;
@@ -3897,7 +3878,7 @@ bool ApplicationManagerImpl::IsHMICooperating() const {
   return hmi_cooperating_;
 }
 
-void ApplicationManagerImpl::set_hmi_cooperating(bool hmi_cooperating) {
+void ApplicationManagerImpl::SetHMICooperating(bool hmi_cooperating) {
   hmi_cooperating_ = hmi_cooperating;
 }
 

@@ -215,6 +215,9 @@ class MockHMICapabilities : public ::application_manager::HMICapabilities {
   MOCK_CONST_METHOD0(DeleteCachedCapabilitiesFile, void());
   MOCK_CONST_METHOD0(GetInterfacesToUpdate,
                      std::vector<hmi_apis::FunctionID::eType>());
+  MOCK_METHOD1(InterfaceResponseReceived,
+               void(hmi_apis::FunctionID::eType requested_interface));
+  MOCK_METHOD0(InitInterfacesToBeRequested, void());
 };
 
 }  // namespace application_manager_test
