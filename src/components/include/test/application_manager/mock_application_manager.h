@@ -212,7 +212,7 @@ class MockApplicationManager : public application_manager::ApplicationManager {
   MOCK_METHOD1(PolicyIDByIconUrl, std::string(const std::string url));
   MOCK_METHOD1(SetIconFileFromSystemRequest, void(const std::string policy_id));
   MOCK_CONST_METHOD0(IsHMICooperating, bool());
-  MOCK_METHOD1(set_hmi_cooperating, void(bool hmi_cooperating));
+  MOCK_METHOD1(SetHMICooperating, void(bool hmi_cooperating));
   MOCK_METHOD2(IviInfoUpdated,
                void(const std::string& vehicle_info, int value));
   MOCK_METHOD1(RegisterApplication,

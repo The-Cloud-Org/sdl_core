@@ -57,6 +57,9 @@ void RCGetCapabilitiesResponse::Run() {
       static_cast<hmi_apis::Common_Result::eType>(
           (*message_)[strings::params][hmi_response::code].asInt());
 
+  hmi_capabilities_.InterfaceResponseReceived(
+      hmi_apis::FunctionID::RC_GetCapabilities);
+
   if (hmi_apis::Common_Result::SUCCESS != result_code) {
     LOG4CXX_DEBUG(logger_,
                   "Request was not successful. Don't change HMI capabilities");
@@ -90,6 +93,12 @@ void RCGetCapabilitiesResponse::Run() {
     LOG4CXX_ERROR(logger_,
                   "Failed to save RC.GetCapabilities response to cache");
   }
+}
+
+void RCGetCapabilitiesResponse::onTimeOut() {
+  LOG4CXX_AUTO_TRACE(logger_);
+  hmi_capabilities_.InterfaceResponseReceived(
+      hmi_apis::FunctionID::RC_GetCapabilities);
 }
 
 }  // namespace commands

@@ -59,6 +59,9 @@ void VRGetLanguageResponse::Run() {
   const Common_Result::eType result_code = static_cast<Common_Result::eType>(
       (*message_)[strings::params][hmi_response::code].asInt());
 
+  hmi_capabilities_.InterfaceResponseReceived(
+      hmi_apis::FunctionID::VR_GetLanguage);
+
   if (Common_Result::SUCCESS != result_code) {
     LOG4CXX_DEBUG(logger_,
                   "Request was not successful. Don't change HMI capabilities");
@@ -89,6 +92,12 @@ void VRGetLanguageResponse::Run() {
   event_engine::Event event(FunctionID::VR_GetLanguage);
   event.set_smart_object(*message_);
   event.raise(application_manager_.event_dispatcher());
+}
+
+void VRGetLanguageResponse::onTimeOut() {
+  LOG4CXX_AUTO_TRACE(logger_);
+  hmi_capabilities_.InterfaceResponseReceived(
+      hmi_apis::FunctionID::VR_GetLanguage);
 }
 
 }  // namespace commands

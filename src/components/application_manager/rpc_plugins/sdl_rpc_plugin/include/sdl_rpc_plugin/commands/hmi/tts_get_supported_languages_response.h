@@ -68,6 +68,8 @@ class TTSGetSupportedLanguagesResponse
    **/
   virtual void Run();
 
+  virtual void onTimeOut();
+
  private:
   DISALLOW_COPY_AND_ASSIGN(TTSGetSupportedLanguagesResponse);
 };

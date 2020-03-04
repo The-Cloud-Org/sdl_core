@@ -930,7 +930,7 @@ class ApplicationManagerImpl
    */
   bool IsHMICooperating() const OVERRIDE;
 
-  void set_hmi_cooperating(bool hmi_cooperating) OVERRIDE;
+  void SetHMICooperating(bool hmi_cooperating) OVERRIDE;
   /**
    * @brief Method used to send default app tts globalProperties
    * in case they were not provided from mobile side after defined time

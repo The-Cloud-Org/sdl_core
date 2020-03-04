@@ -66,6 +66,8 @@ class UIGetCapabilitiesResponse : public app_mngr::commands::ResponseFromHMI {
    **/
   virtual void Run();
 
+  virtual void onTimeOut();
+
  private:
   DISALLOW_COPY_AND_ASSIGN(UIGetCapabilitiesResponse);
 };

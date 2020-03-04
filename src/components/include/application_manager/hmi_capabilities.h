@@ -523,6 +523,11 @@ class HMICapabilities {
 
   virtual std::vector<hmi_apis::FunctionID::eType> GetInterfacesToUpdate()
       const = 0;
+
+  virtual void InterfaceResponseReceived(
+      hmi_apis::FunctionID::eType requested_interface) = 0;
+
+  virtual void InitInterfacesToBeRequested() = 0;
 };
 
 }  //  namespace application_manager

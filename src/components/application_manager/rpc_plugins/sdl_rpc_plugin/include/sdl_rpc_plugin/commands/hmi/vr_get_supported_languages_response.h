@@ -68,6 +68,8 @@ class VRGetSupportedLanguagesResponse
    **/
   virtual void Run();
 
+  virtual void onTimeOut();
+
  private:
   DISALLOW_COPY_AND_ASSIGN(VRGetSupportedLanguagesResponse);
 };

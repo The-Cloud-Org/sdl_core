@@ -701,7 +701,7 @@ TEST_F(HMICapabilitiesTest, Comparison_ccpuVersion) {
   std::shared_ptr<HMICapabilitiesForTesting> hmi_capabilities =
       std::make_shared<HMICapabilitiesForTesting>(mock_app_mngr);
 
-  EXPECT_CALL(mock_app_mngr, set_hmi_cooperating(true)).Times(1);
+  EXPECT_CALL(mock_app_mngr, SetHMICooperating(true)).Times(1);
   EXPECT_CALL(mock_app_mngr, OnSendGetCapabilitiesForInterface()).Times(1);
 
   hmi_capabilities->set_ccpu_version(ccpu_version);

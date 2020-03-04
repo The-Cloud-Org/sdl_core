@@ -494,7 +494,7 @@ class ApplicationManager {
    * @brief Sets state for hmi cooperating
    * @param New state to be set
    */
-  virtual void set_hmi_cooperating(bool hmi_cooperating) = 0;
+  virtual void SetHMICooperating(bool hmi_cooperating) = 0;
 
   /**
    * @brief Notifies all components interested in Vehicle Data update
